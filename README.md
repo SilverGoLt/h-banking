@@ -10,6 +10,6 @@ https://discord.gg/P3QtW3HZCg
 ### Usage and License
 You can use the UI for free on your server, you're not allowed to take my work and sell it in any way of form, this is a free resource created for people that don't know how to make a simple UI and displays simple ways of creating UI's using TailwindCSS and AlpineJS.
 
-##Video
+## Video
 https://medal.tv/clips/50866325/d1337S2ewb50)
 ![](https://i.imgur.com/wYipfAE.jpeg)
