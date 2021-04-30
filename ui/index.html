@@ -25,6 +25,11 @@
               <span class="font-semibold mr-2 text-left flex-auto">You withdraw $<span x-text="withdraw"></span>
             </div>
           </div>
+          <div class="absolute top-16 rounded-lg text-center py-4 mb-5 lg:px-4" x-show.transition.in.out.duration.200ms="talert === true">
+            <div class="p-4 bg-sec-bg items-center text-yellow-400 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+              <span class="font-semibold mr-2 text-left flex-auto">You transfered $<span x-text="transfer"></span> to ID:<span x-text="bplayer"></span></span>
+            </div>
+          </div>
         <div class="main-ui relative h-1/2 w-full max-w-xl px-5 rounded-xl bg-main-bg">
             <div class="welcome-text flex flex-1 items-start mt-5 text-left">
                 <p>
@@ -62,11 +67,16 @@
                     </div>
                 </div>
             </div>
-            <div class="buttons flex justify-around mt-10 space-x-10 font-semibold">
+            <div class="buttons flex justify-around mt-10 font-semibold">
                 <div class="wallet flex w-48 h-14 bg-sec-bg rounded-xl">
                     <div class="bank-stat flex flex-1 justify-center flex-col flex-wrap items-center">
                         <button @click.prevent="tab = '1'" class="text-1xl uppercase hover:text-w-cl transition-all ease-in-out focus:outline-none"><i class="fas fa-hand-holding-usd text-2xl text-w-cl mr-2"></i>Withdraw</button>
                 </div>
+                </div>
+                <div class="wallet w-12 h-14 flex bg-sec-bg rounded-xl">
+                    <div class="bank-stat flex flex-1 justify-center flex-col flex-wrap items-center">
+                            <button @click.prevent="tab = '3'" class="text-1xl uppercase focus:outline-none"><i class="fas fa-exchange-alt hover:text-yellow-600 transition-all ease-in-out text-yellow-400"></i></button>
+                    </div>
                 </div>
             <div class="wallet w-48 h-14 flex bg-sec-bg rounded-xl">
                 <div class="bank-stat flex flex-1 justify-center flex-col flex-wrap items-center">
@@ -78,7 +88,7 @@
                 <ul class="flex">
                     <li id="1" x-show.transition.in.duration.200ms="tab === '1'" class="flex flex-col">
                         <span>Withdraw</span>
-                        <div class="o flex flex-row">
+                        <div class="o flex flex-r ow">
                             <input x-model="withdraw" type="text" class="px-5 rounded-lg py-2 focus:outline-none bg-sec-bg mr-3" name="" id="withdraw">
                             <button @click="wh()" class="w-12 hover:bg-green-500 ease-in-out focus:outline-none transition-all flex justify-center items-center rounded-lg bg-sec-bg"><i class="fas fa-check"></i></button>    
                         </div>
@@ -88,6 +98,17 @@
                         <div class="o flex flex-row">
                             <input x-model="deposit" type="text" class="px-5 rounded-lg py-2 focus:outline-none bg-sec-bg mr-3" name="" id="deposit">
                             <button @click="dp()" class="w-12 hover:bg-green-500 ease-in-out focus:outline-none transition-all flex justify-center items-center rounded-lg bg-sec-bg"><i class="fas fa-check"></i></button>    
+                        </div>
+                    </li>
+                    <li id="1" x-show.transition.in.duration.200ms="tab === '3'" class="flex flex-col">
+                        <div class="text space-x-5">
+                            <span class="px-2">ID</span>
+                            <span>Transfer</span>
+                        </div>
+                        <div class="o flex flex-row">
+                            <input x-model="bplayer" type="text" class="w-10 px-2 rounded-lg py-2 focus:outline-none text-center bg-sec-bg mr-3" name="" id="deposit">
+                            <input x-model="transfer" type="text" class="px-5 rounded-lg py-2 focus:outline-none bg-sec-bg mr-3" name="" id="deposit">
+                            <button @click="trf()" class="w-12 hover:bg-green-500 ease-in-out focus:outline-none transition-all flex justify-center items-center rounded-lg bg-sec-bg"><i class="fas fa-check"></i></button>    
                         </div>
                     </li>
                 </ul>

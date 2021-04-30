@@ -33,6 +33,12 @@ RegisterNUICallback('deposit', function(data, cb)
     end)
 end)
 
+RegisterNUICallback('transfer', function(data)
+	TriggerServerEvent('h-bank:transfer', data.bplayer, data.amount)
+	print(json.encode(data))
+end)
+
+
 RegisterNUICallback('withdraw', function(data, cb)
 	TriggerServerEvent('esx_atm:withdraw', data.amount)
 	ESX.TriggerServerCallback('h-banking:getAccounts', function(wallet, bank)

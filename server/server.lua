@@ -43,3 +43,28 @@ ESX.RegisterServerCallback('h-banking:getAccounts', function(source, cb)
 		bank = xPlayer.getAccount('bank').money
 	})
 end)
+
+RegisterServerEvent('h-bank:transfer')
+AddEventHandler('h-bank:transfer', function(bplayer, amount)
+	if tonumber(bplayer) < 1 or bplayer == nil then
+		TriggerClientEvent('esx:showAdvancedNotification', source, 'H-Banking', 'Transfer Money', 'Uh oh ID not found?', 'CHAR_BANK_MAZE', 9)
+		return
+	else
+		local aPlayer = ESX.GetPlayerFromId(source)
+		local bPlayer = ESX.GetPlayerFromId(bplayer)
+		local balance = 0
+		print(abalance)
+		abalance = aPlayer.getAccount('bank').money
+		bbalance = bPlayer.getAccount('bank').money
+		print(abalance)
+		if tonumber(source) == tonumber(bplayer) then
+			TriggerClientEvent('esx:showAdvancedNotification', source, 'H-Banking', 'Transfer Money', 'You tried to transfer the money to yourself?', 'CHAR_BANK_MAZE', 9)
+		else
+			aPlayer.removeAccountMoney('bank', amount)
+			bPlayer.addAccountMoney('bank', amount)
+			TriggerClientEvent('esx:showAdvancedNotification', source, 'H-Banking', 'Transfer Money', 'Successfully transfered $' ..amount, 'CHAR_BANK_MAZE', 9)
+			TriggerClientEvent('esx:showAdvancedNotification', bplayer, 'H-Banking', 'Transfer Money', 'Successfully received $' ..amount .. 'From ' ..aPlayer.getName(), 'CHAR_BANK_MAZE', 9)
+		end
+	end
+end)
+

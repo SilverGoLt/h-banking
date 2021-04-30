@@ -8,6 +8,9 @@ function main(){
         withdraw: 0,
         dalert: false,
         walert: false,
+        talert: false,
+        bplayer: 1,
+        transfer: 0,
         close(){
             postData('http://h-banking/escape')
             this.show = false
@@ -21,6 +24,13 @@ function main(){
             this.dalert = true
             setTimeout(() => {
                 this.dalert = false
+            }, 800)
+        },
+        trf(){
+            postData('http://h-banking/transfer', {bplayer: this.bplayer, amount: this.transfer})
+            this.talert = true
+            setTimeout(() => {
+                this.talert = false
             }, 800)
         },
         wh(){
