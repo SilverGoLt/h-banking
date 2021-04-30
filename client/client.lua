@@ -35,7 +35,6 @@ end)
 
 RegisterNUICallback('transfer', function(data)
 	TriggerServerEvent('h-bank:transfer', data.bplayer, data.amount)
-	print(json.encode(data))
 end)
 
 
@@ -47,7 +46,7 @@ RegisterNUICallback('withdraw', function(data, cb)
 			wallet = wallet.wallet,
 			bank = wallet.bank
 		})
-end)
+	end)
 end)
 
 -- Create blips
@@ -68,65 +67,52 @@ Citizen.CreateThread(function()
 end)
 
 -- Activate menu when player is inside marker
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(10)
-		local coords = GetEntityCoords(PlayerPedId())
-		local canSleep = true
-		isInATMMarker = false
+if Config.Prompt then
+	Citizen.CreateThread(function()
+		while true do
+			Citizen.Wait(50)
+			local letSleep = true
 
-		for k,v in pairs(Config.ATMLocations) do
-			if GetDistanceBetweenCoords(coords, v.x, v.y, v.z, true) < 1.0 then
-				isInATMMarker, canSleep = true, false
-				break
-			end
-		end
-
-		if isInATMMarker and not hasAlreadyEnteredMarker then
-			hasAlreadyEnteredMarker = true
-			canSleep = false
-		end
-	
-		if not isInATMMarker and hasAlreadyEnteredMarker then
-			hasAlreadyEnteredMarker = false
-			SetNuiFocus(false)
-			menuIsShowed = false
-			canSleep = false
-		end
-
-		if canSleep then
-			Citizen.Wait(500)
-		end
-	end
-end)
-
--- Menu interactions
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(10)
-
-		if isInATMMarker and not menuIsShowed then
-
-			ESX.ShowHelpNotification("Press ~b~E~b~ to open ATM"
-			)
-
-			if IsControlJustReleased(0, 38) and IsPedOnFoot(PlayerPedId()) then
-				menuIsShowed = true
-				ESX.TriggerServerCallback('h-banking:getAccounts', function(wallet, bank)
-					SendNUIMessage({
-						show = true,
-						wallet = wallet.wallet,
-						bank = wallet.bank
-					})
-			end)
-				SetNuiFocus(true, true)
+			if IsNearbyATM() then
+				letSleep = false
+				ESX.ShowHelpNotification("Press ~b~E~b~ to open ATM")
 			end
 
-		else
-			Citizen.Wait(500)
+			if letSleep then 
+				Citizen.Wait(500)
+			end
+		end
+	end)
+end
+
+RegisterCommand('openatm', function()
+    local playerPed = PlayerPedId()
+
+    if not menuIsShowed and IsPedOnFoot(playerPed) and IsNearbyATM() then
+    	menuIsShowed = true
+		ESX.TriggerServerCallback('h-banking:getAccounts', function(wallet, bank)
+			SendNUIMessage({
+				show = true,
+				wallet = wallet.wallet,
+				bank = wallet.bank
+			})
+		end)
+		SetNuiFocus(true, true)
+    end
+end, false)
+RegisterKeyMapping('openatm', 'Open ATM', 'keyboard', 'e')
+
+function IsNearbyATM()
+	local coords = GetEntityCoords(PlayerPedId())
+
+	for i = 1, #Config.ATMLocations do
+		local atmCoords = vector3(Config.ATMLocations[i].x, Config.ATMLocations[i].y, Config.ATMLocations[i].z)
+		if #(coords - atmCoords) < 1.0 then
+			return true
 		end
 	end
-end)
+	return false
+end
 
 -- close the menu when script is stopping to avoid being stuck in NUI focus
 AddEventHandler('onResourceStop', function(resource)

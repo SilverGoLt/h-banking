@@ -2,6 +2,7 @@ Config              = {}
 
 Config.ZDiff        = 2.0
 Config.BlipSprite   = 431
+Config.Prompt		= false
 
 Config.Locale       = 'en'
 
