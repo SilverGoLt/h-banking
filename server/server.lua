@@ -56,6 +56,11 @@ AddEventHandler('h-bank:transfer', function(bplayer, amount)
 		print(abalance)
 		abalance = aPlayer.getAccount('bank').money
 		bbalance = bPlayer.getAccount('bank').money
+			
+		if abalance > amount then
+				return
+		end
+		
 		print(abalance)
 		if tonumber(source) == tonumber(bplayer) then
 			TriggerClientEvent('esx:showAdvancedNotification', source, 'H-Banking', 'Transfer Money', 'You tried to transfer the money to yourself?', 'CHAR_BANK_MAZE', 9)
