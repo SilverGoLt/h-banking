@@ -58,7 +58,7 @@ AddEventHandler('h-bank:transfer', function(bplayer, amount)
 		bbalance = bPlayer.getAccount('bank').money
 			
 		if abalance > amount then
-				return
+			return
 		end
 		
 		print(abalance)
