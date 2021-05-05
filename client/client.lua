@@ -35,6 +35,12 @@ end)
 
 RegisterNUICallback('transfer', function(data)
 	TriggerServerEvent('h-bank:transfer', data.bplayer, data.amount)
+	ESX.TriggerServerCallback('h-banking:getAccounts', function(wallet, bank)
+            SendNUIMessage({
+				show = true,
+				wallet = wallet.wallet,
+				bank = wallet.bank
+            })
 end)
 
 
