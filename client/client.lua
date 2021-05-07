@@ -41,6 +41,7 @@ RegisterNUICallback('transfer', function(data)
 				wallet = wallet.wallet,
 				bank = wallet.bank
             })
+    end)
 end)
 
 
