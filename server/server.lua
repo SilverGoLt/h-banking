@@ -55,16 +55,18 @@ AddEventHandler('h-bank:transfer', function(bplayer, amount)
 		local balance = 0
 		local abalance = aPlayer.getAccount('bank').money
 		local bbalance = bPlayer.getAccount('bank').money
-		if abalance < tonumber(amount) then
+		local yamount = tonumber(amount)
+
+		if abalance < yamount then
 			return
 		end
 		if tonumber(source) == tonumber(bplayer) then
 			TriggerClientEvent('esx:showAdvancedNotification', source, 'H-Banking', 'Transfer Money', 'You tried to transfer the money to yourself?', 'CHAR_BANK_MAZE', 9)
 		else
-			aPlayer.removeAccountMoney('bank', amount)
-			bPlayer.addAccountMoney('bank', amount)
-			TriggerClientEvent('esx:showAdvancedNotification', source, 'H-Banking', 'Transfer Money', 'Successfully transfered $' ..amount, 'CHAR_BANK_MAZE', 9)
-			TriggerClientEvent('esx:showAdvancedNotification', bplayer, 'H-Banking', 'Transfer Money', 'Successfully received $' ..amount .. 'From ' ..aPlayer.getName(), 'CHAR_BANK_MAZE', 9)
+			aPlayer.removeAccountMoney('bank', yamount)
+			bPlayer.addAccountMoney('bank', yamount)
+			TriggerClientEvent('esx:showAdvancedNotification', source, 'H-Banking', 'Transfer Money', 'Successfully transfered $' ..yamount, 'CHAR_BANK_MAZE', 9)
+			TriggerClientEvent('esx:showAdvancedNotification', bplayer, 'H-Banking', 'Transfer Money', 'Successfully received $' ..yamount .. 'From ' ..aPlayer.getName(), 'CHAR_BANK_MAZE', 9)
 		end
 	end
 end)
