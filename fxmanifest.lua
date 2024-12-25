@@ -18,6 +18,11 @@ client_scripts {
 	'config.lua',
     'client/client.lua',
 }
+
+shared_scripts {
+    '@es_extended/imports.lua'
+}
+
 server_scripts {
 	'config.lua',
     'server/server.lua',
